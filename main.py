@@ -1,12 +1,28 @@
 import heapq
 
-def heap_sort(arr):
-    heapq.heapify(arr)
-    sorted_arr = []
-    while arr:
-        sorted_arr.append(heapq.heappop(arr))
-    return sorted_arr
+# Основне завдання: Мінімальні витрати на з'єднання кабелів
+def min_cost_to_connect_cables(cables):
+    if len(cables) <= 1:
+        return 0
 
+    heapq.heapify(cables)
+    total_cost = 0
+
+    while len(cables) > 1:
+        # Витягуємо два найменших кабелі
+        first = heapq.heappop(cables)
+        second = heapq.heappop(cables)
+        
+        # Об'єднуємо їх
+        combined = first + second
+        total_cost += combined
+
+        # Додаємо назад в купу
+        heapq.heappush(cables, combined)
+
+    return total_cost
+
+# Необов'язкове завдання: Злиття k відсортованих списків
 def merge_k_lists(lists):
     min_heap = []
     for i, lst in enumerate(lists):
@@ -24,12 +40,13 @@ def merge_k_lists(lists):
 
     return merged_list
 
-# Приклад використання пірамідального сортування
-data = [3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5]
-sorted_data = heap_sort(data)
-print("Відсортований масив:", sorted_data)
+if __name__ == "__main__":
+    # Тестування основного завдання
+    cables = [8, 4, 6, 12]
+    min_cost = min_cost_to_connect_cables(cables)
+    print("Мінімальні витрати на з'єднання кабелів:", min_cost)
 
-# Приклад використання злиття k відсортованих списків
-lists = [[1, 4, 5], [1, 3, 4], [2, 6]]
-merged_list = merge_k_lists(lists)
-print("Відсортований список:", merged_list)
+    # Тестування необов'язкового завдання
+    lists = [[1, 4, 5], [1, 3, 4], [2, 6]]
+    merged_list = merge_k_lists(lists)
+    print("Відсортований список:", merged_list)
